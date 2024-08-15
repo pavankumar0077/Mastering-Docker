@@ -64,6 +64,8 @@ Bridge : A Docker bridge network is a private internal network created by Docker
 # Listing namespaces & Running basic docker commands 
 
 Basic Docker Commands
+==
+```
 
 Check Docker version: docker version
 
@@ -84,7 +86,7 @@ Stop all containers: docker stop $(docker ps -aq)
 Deploy and remove containers: docker run --rm -d --name app1 nginx:latest
 
 Inspect a container: docker inspect app1
-
+```
 Port forwarding: docker run --rm -d --name app1 -p 8000:80 nginx:latest
 
 View logs: docker logs app1 -f
