@@ -71,6 +71,9 @@ df -h
 
 ![image](https://github.com/user-attachments/assets/71d3268b-4f70-4adb-94a5-45547defc72d)
 
+# Now change the server dir as well
+
+- Day02/dockerServiceDir-Change
 
 # Steps To Create EBS Volume and Attaching it to the instance
 Create EBS volume GP2 and atatch it to Instance
