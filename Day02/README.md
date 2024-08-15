@@ -75,6 +75,10 @@ df -h
 
 - Day02/dockerServiceDir-Change
 
+
+## IMP STUFF
+- IN REALTIME WE ALL KNOW THAT DOCKER CONTAINER WILL NOT HAVE Troubleshooting tools like ifconfig, net-tools and etc. SO THERE WILL BE ANOTHER DOCKER IMAGE WE USE THAT IMAGE AND DO THE STUFF 
+
 # Steps To Create EBS Volume and Attaching it to the instance
 Create EBS volume GP2 and atatch it to Instance
 
