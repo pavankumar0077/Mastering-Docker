@@ -13,7 +13,7 @@ RUN apt update && apt install -y jq net-tools curl wget unzip\
     && apt install -y nginx iputils-ping 
 
 RUN wget https://releases.hashicorp.com/terraform/${T_VERSION}/terraform_${T_VERSION}_linux_amd64.zip \
-    && wgt https://releases.hashicorp.com/packer/${P_VERSION}/packer_${P_VERSION}_linux_amd64.zip\
+    && wget https://releases.hashicorp.com/packer/${P_VERSION}/packer_${P_VERSION}_linux_amd64.zip\
     && unzip terraform_${T_VERSION}_linux_amd64.zip  && unzip packer_${P_VERSION}_linux_amd64.zip\
     && chmod 777 terraform && chmod 777 packer\
     && ./terraform version && ./packer version 
@@ -21,5 +21,84 @@ RUN wget https://releases.hashicorp.com/terraform/${T_VERSION}/terraform_${T_VER
 CMD ["nginx","-g","daemon off;"]
 
 ### ================================================================================================= ###
+
+FROM == Is a base image, Where we will get a UBUNTU OS we need to add or CUSTOMIZE THIS IMAGE AND SAVE IT
+-- In production we don't use the direct bass images we use images which are customized from the case image something like that.
+
+LABEL or MAINTAINER == label or maintainer this is nothing but providing a key value pair like who wrote this Docker file something like that
+
+ENV AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXXXXXXXXXX\
+    AWS_SECRET_KEY_ID=XXXXXXXXXXXXXXXXXXXXXXXX\
+    AWS_DEFAULT_REGION=US-EAST-1A
+- Environment variables are passed when running the container not when building the container like opposite to the arguments.
+
+ARG T_VERSION == We are using arguments here to define a specific version so we will know like which specific version is working in the development environment so we will use the same thing in the Docker as well to get the same application should not be crashed with something like that so we use the same version to specify that version we use argument in the Docker file as an instruction
+- These arguments are only passed when you're running the build
+- This argument cannot be passed when running the container
+
+RUN apt udpdate == Run instruction is used to install some packages or to download some packages we can use the run in Docker file
+
+CMD == CMD is nothing but commands, in general in Ubuntu ```sudo systemctl enable nginx```, ``` start - restart ```, something like that but in Docker we don't do like that we'll do in such a way like
+CMD ["nginx","-g","daemon off;"] - This command will make NGINX to run in the background for the Docker container
+
+
+### DOCKER FILE NAME 
+
+- We can use "dockerfile.dev" We can use file name for the Docker file in this way as in general we use Capital D for the Docker file but here we can also use like in this way as well but while building we need to use -f
+
+
+```
+docker build -f dockerfile.dev . 
+```
+- In the above command we are only building the docker image without any like repository or a TAG
+
+```
+docker build -t pavankumar0077/custom:v1 -f dockerfile.dev . 
+```
+- in the ebook command we are using tag as well
+
+```
+docker build -t pavankumar0077/custom:v1 -f dockerfile.dev . --no-cache
+```
+- Sometimes like we create images multiple times so at this time what happens is like we will get the previous image get cashed and the next build what we are creating for the same image will build very fastly this is because of the cash it is stored so if you don't want to store that cash like previous data or previous layer then we can use this flag --no-cache
+
+```
+docker run --rm -d -name web-app -p 8000:80 pavankumar0077/custom:v1
+```
+- Here we are using - - RM to when we stop the Docker image it automatically get destroyed as well like in in general if you don't use - F and RM then if Docker image got like stopped when we run again it says like the name of the application or container is already running or already exist something like that so if you want to stop the Docker image and as well as kill the Docker image as soon as it stops then we have to use - F and RM
+
+```
+docker build -t pavankumar0077/custom:v1 --build-arg T_VERSION='1.5.0' --build-arg P_VERSION='1.4.0' -f dockerfile.dev . --no-cache
+```
+We can override the values of arguments while running the container.
+- We are overriding the values which are provided in the Docker file while running the container
+
+```
+docker build -t pavankumar0077/custom:v1 --progress=plain --build-arg T_VERSION='1.5.0' --build-arg P_VERSION='1.4.0' -f dockerfile.dev . --no-cache
+```
+- Like in real time while creating or building a docker image so we just want to know what are the things that are happening internally so if you want to know all the things that are happening internally we need to use - - progress flag
+
+```
+docker history pavankumar0077/custom:v1
+```
+- This will show like what are the changes that we did for the image
+
+```
+docker exec -it web-app env
+```
+- If you want to see what are the environment variables that our docker image has we have to use this command it will show what are the variables environment variables that are that we have given in the docker file here web app is the Docker container name that we have provided while running the Docker image container
+
+```
+docker run -rm -d --name web-app2 -p 8001:80 -e AWS_ACCESS_KEY_ID=hidden -e AWS_SECRET_KEY_ID=hidden -e AWS_DEFAULT_REGION=hidden pavankumar0077:V1
+```
+- Here we are overriding the environment variables that we have given in the darker file
+- Dangling images are nothing but images that are created like previous versions override of previous version and at the final stage we get the version which we required like V Phi is the final version which we want to required so from 0 to 4 or 1 to 4 versions or link waste and it consumes lot of space in the host mission so that are like waste of storage
+so we need to use 
+
+``` 
+docker system prune 
+```
+- It will delete unnecessary darker images unnecessary files and save the space in the system
+
 
 
