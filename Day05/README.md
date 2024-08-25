@@ -132,8 +132,152 @@ This command informs Docker that the container will listen on the specified netw
 CMD ["nginx","-g","daemon off;"]
 ```
 
+
+CMD EXAMPLE
+--
+Ex:
+```
+CMD ["/usr/bin/ping","-c 4","www.google.com"]
+```
+
 This command provides the default command to run when the container starts. Here, it starts the `nginx` server in the foreground.
 
+![image](https://github.com/user-attachments/assets/14cd5ddb-ab7c-4fd4-bd59-6d7e422afb33)
+- Here as you can see like in the Docker file we have mentioned ping - C4 www.google.com
+```
+docker run kiran236/cmd:v1 ping www.youtube.com
+```
+- As you can see we have highlighted something and we have given the same cmd command by overriding while running the container with www .youtube.com and we didnt mention any - C over there so you can see the result in the ever screenshot
+
+ENTRYPOINT
+--
+```
+ENTRYPOINT ["/usr/bin/ping","-c 4","www.google.com"]
+```
+- This will work as usual let CMD but the main difference is like CMD weekend override while running the container but entry point we cannot override.
+- ![image](https://github.com/user-attachments/assets/735f95a4-fe50-456a-ba7d-fdd3d68669c2)
+
+
+## NOTE :
+- In organizations they follow two types of approaches the thing is like first they'll keep the entry point and then they'll keep the cmd part in the entry point they will give the fixed values that should not be changed but in the cmd they'll give values that can be overridden:
+
+```
+ENTRYPOINT ["/usr/bin/ping","-c4"]
+
+CMD ["www.google.com"]
+```
+
+- Like as I mentioned above we can change the CMD value here is an example for that
+- ![image](https://github.com/user-attachments/assets/564e47dc-84cd-422f-a585-0f4295fa16e3)
+
+```
+docker run --rm --entrypoint ping pavankumar0077/custom:v5 -c 4 www.google.com
+```
+
+## Difference between entry point and C M D
+```
+Purpose:
+
+ENTRYPOINT: Defines the main executable that should always run inside the container. It’s intended to be the primary command for the container.
+CMD: Provides default arguments to the ENTRYPOINT. If no arguments are provided at runtime, Docker uses CMD. If an ENTRYPOINT is not specified, CMD can act as the main command.
+Override Behavior:
+
+CMD: Easily overridden by providing a command at runtime (e.g., docker run myimage command). This replaces the CMD in the Dockerfile.
+ENTRYPOINT: Overridden only by using the --entrypoint flag. If overridden, CMD is ignored unless explicitly passed as an argument to the new ENTRYPOINT.
+Usage Pattern:
+
+ENTRYPOINT is for specifying the main action the container should perform (e.g., running a script or an application).
+CMD is for providing default arguments to the main action or command, which can be overridden.
+```
+```
+Real-Time Scenarios
+1. Microservices Deployment
+ENTRYPOINT: Set to the microservice’s executable (e.g., /usr/bin/myservice).
+
+CMD: Provide default environment configurations (e.g., --env=production).
+
+Example: The microservice container always starts with the service executable, but you can override environment configurations using CMD at runtime.
+
+2. Database Containers
+ENTRYPOINT: Set to the database startup command (e.g., postgres or mysqld).
+
+CMD: Provide default database initialization arguments (e.g., --init-file=/init.sql).
+
+Example: The database always starts, but you can override initialization scripts or settings.
+```
+```
+Example 1: Using CMD and ENTRYPOINT Together
+Dockerfile Example:
+Dockerfile
+
+# Base image
+FROM ubuntu:latest
+
+# Set ENTRYPOINT to always run "ping"
+ENTRYPOINT ["ping"]
+
+# Set CMD to provide default arguments (e.g., "-c 4 www.google.com")
+CMD ["-c", "4", "www.google.com"]
+Scenario 1: Running the Container without Override
+
+docker run pavankumar0077/custom:v5
+Explanation:
+
+ENTRYPOINT is ping.
+CMD is -c 4 www.google.com.
+Result:
+The container runs ping -c 4 www.google.com. The CMD provides the default arguments to the ENTRYPOINT.
+
+Scenario 2: Overriding CMD at Runtime
+
+docker run pavankumar0077/custom:v5 www.example.com
+Explanation:
+
+ENTRYPOINT is still ping.
+CMD is overridden with www.example.com.
+Result:
+The container runs ping www.example.com. The runtime argument www.example.com replaces the default CMD.
+
+Scenario 3: Overriding ENTRYPOINT at Runtime
+
+docker run --entrypoint ls pavankumar0077/custom:v5
+Explanation:
+
+ENTRYPOINT is overridden with ls.
+CMD (-c 4 www.google.com) is ignored.
+Result:
+The container runs ls, ignoring both ENTRYPOINT and CMD.
+
+Example 2: ENTRYPOINT with Hard-Coded Commands
+Dockerfile Example:
+Dockerfile
+
+# Base image
+FROM ubuntu:latest
+
+# Set ENTRYPOINT to a fixed command (e.g., starting a web server)
+ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
+# Set CMD to a configuration flag (e.g., a config file)
+CMD ["-f", "/etc/apache2/apache2.conf"]
+Scenario 1: Default Behavior
+
+docker run myapacheimage
+Result:
+The container runs /usr/sbin/apache2ctl -D FOREGROUND -f /etc/apache2/apache2.conf.
+
+Scenario 2: Overriding CMD
+
+docker run myapacheimage -f /custom/path/apache2.conf
+Result:
+The container runs /usr/sbin/apache2ctl -D FOREGROUND -f /custom/path/apache2.conf.
+
+Scenario 3: Overriding ENTRYPOINT
+
+docker run --entrypoint bash myapacheimage
+Result:
+The container starts a bash shell, ignoring the Apache entry point.
+```
 ### Building and Running the Docker Image
 
 1. **Build the Docker Image:**
