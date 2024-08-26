@@ -278,6 +278,11 @@ docker run --entrypoint bash myapacheimage
 Result:
 The container starts a bash shell, ignoring the Apache entry point.
 ```
+
+## RESTRICTING CONTAINER WITH ROOT ACCESS
+- 
+
+
 ### Building and Running the Docker Image
 
 1. **Build the Docker Image:**
