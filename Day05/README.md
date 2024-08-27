@@ -279,9 +279,17 @@ Result:
 The container starts a bash shell, ignoring the Apache entry point.
 ```
 
-## RESTRICTING CONTAINER WITH ROOT ACCESS
-- 
+## EXPOSE
+- ``` https://docs.docker.com/reference/dockerfile/#expose ```
+- Exposes nothing but a documentation representation of the port for a developer and develops engineer it's kind of a documentation if you don't mention expose also the application still works because we are using - P and port and container port
 
+## COPY & ADD
+- Copy will copy the content from local directory or local mission to Docker container whereas add will have some extra features
+- ADD As the ability to download or retrieve the files from S3 bucket or from the Internet
+
+## APPUSER
+- in general for security reasons we only use app users or non root users in the Docker containers
+![image](https://github.com/user-attachments/assets/270784db-b4c1-4b55-a865-4389e8ea1d69)
 
 ### Building and Running the Docker Image
 
