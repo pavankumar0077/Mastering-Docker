@@ -1,5 +1,8 @@
 ![6](https://github.com/saikiranpi/Mastering-Docker/assets/109568252/f4c8a7e7-3ed4-4b26-87ff-c20586ec3727)
 
+### Process before creating a docker image in prod
+![image](https://github.com/user-attachments/assets/ff52e250-d1e9-4071-917f-115400a65017)
+
 
 Google Distroless Images and Docker Multi-Stage Builds
 
