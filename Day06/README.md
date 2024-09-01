@@ -31,6 +31,11 @@ Docker Multi-Stage Builds
 
 Docker multi-stage builds allow you to create more efficient Dockerfiles by using multiple FROM statements. Each stage in the build process can have its own base image and set of instructions, enabling you to compile code, run tests, and package your application without including unnecessary build tools and dependencies in the final image.
 
+### To check the layers and it size of the docker image use this command
+``` docker histroy pavankumar0077/open-rfs:V2 ```
+![image](https://github.com/user-attachments/assets/258ae381-2bf1-4647-ac11-caec9d9421b8)
+
+
 Clone https://github.com/spring-projects/spring-petclinic.git
 
 And follow by watching the full video here : https://youtu.be/CMO0MziP2yQ
