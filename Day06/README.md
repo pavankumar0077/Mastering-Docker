@@ -10,6 +10,11 @@ What are Distroless Images?
 
 Distroless images are Docker images built by Google that contain only your application and its runtime dependencies, without a package manager or any additional software. This approach minimizes the attack surface and reduces the size of your container image.
 
+![image](https://github.com/user-attachments/assets/7a4c89fe-1e21-4a26-afac-4a9a2bc25952)
+
+### DISTROLESS IMAGES DOES NOT HAVE SHELL OR BASH - FOR SECURITY 
+### WE CAN NOT LOGIN ANS INSTALL ANY PKG'S INSIDE THE CONTAINER - we can do it by creating a volume and we can do it.
+
 Why Use Distroless Images?
 
 Reduced Attack Surface: Since Distroless images contain only your application and its dependencies, they eliminate unnecessary tools and libraries that could be exploited by attackers.
@@ -19,6 +24,10 @@ Smaller Image Size: By excluding unnecessary components, Distroless images are s
 https://github.com/GoogleContainerTools/distroless
 
 Docker Multi-Stage Builds
+
+### NOTE : We all know we use run instruction in Docker file, but one thing we need to keep in our mind is like if you have more run commands then there will be more layers while creating a Docker file and the image will also be like huge very big size image so the thing we need to keep in mind is like we need to use run command in a proper way like we can write all the required things or required instructions or required like packages that that we want to install in one single run command if possible and make it like minimal size.
+
+
 
 Docker multi-stage builds allow you to create more efficient Dockerfiles by using multiple FROM statements. Each stage in the build process can have its own base image and set of instructions, enabling you to compile code, run tests, and package your application without including unnecessary build tools and dependencies in the final image.
 
